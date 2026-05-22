@@ -2,8 +2,6 @@
 Flask application for Emotion Detection.
 """
 
-import json
-
 from flask import Flask, render_template, request
 from EmotionDetection import emotion_detector
 
@@ -21,21 +19,19 @@ def emotion_detector_route():
         return "Invalid text! Please try again."
 
     try:
-        result = json.loads(emotion_detector(text_to_analyze))
+        result = emotion_detector(text_to_analyze)
     except Exception:
         return "Emotion detection service is unavailable right now."
 
-    try:
-        emotions = result['emotionPredictions'][0]['emotion']
-    except (KeyError, IndexError, TypeError):
+    if result['dominant_emotion'] is None:
         return "Invalid text! Please try again."
 
-    anger = emotions['anger']
-    disgust = emotions['disgust']
-    fear = emotions['fear']
-    joy = emotions['joy']
-    sadness = emotions['sadness']
-    dominant_emotion = max(emotions, key=emotions.get)
+    anger = result['anger']
+    disgust = result['disgust']
+    fear = result['fear']
+    joy = result['joy']
+    sadness = result['sadness']
+    dominant_emotion = result['dominant_emotion']
 
     output = (
         f"For the given statement, the system response is "
