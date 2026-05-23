@@ -2,8 +2,6 @@
 Flask application for Emotion Detection.
 """
 
-import requests
-
 from flask import Flask, render_template, request
 from EmotionDetection import emotion_detector
 
@@ -22,7 +20,7 @@ def emotion_detector_route():
 
     try:
         result = emotion_detector(text_to_analyze)
-    except (requests.RequestException, KeyError, TypeError, ValueError):
+    except Exception:
         return "Emotion detection service is unavailable right now."
 
     if result['dominant_emotion'] is None:

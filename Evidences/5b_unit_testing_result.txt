@@ -1,0 +1,7 @@
+python3 -m unittest -v test_emotion_detection.py
+test_emotions (test_emotion_detection.EmotionDetectionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.663s
+
+OK
